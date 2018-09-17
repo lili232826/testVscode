@@ -1,0 +1,187 @@
+<template>
+<div class="table-wrap">
+  <el-table
+    ref="singleTable"
+    :data="tableData"
+    stripe
+    border
+    highlight-current-row
+    :default-sort = "{prop: 'date', order: 'descending'}"
+    @current-change="handleCurrentChange"
+    @selection-change="handleSelectionChange"
+    style="width: 100%">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+      type="index"
+      width="50">
+    </el-table-column>
+    <el-table-column
+      label="日期"
+      prop="date"
+      sortable
+      width="180"
+      :filters="[{text: '2016-05-01', value: '2016-05-01'}, {text: '2016-05-02', value: '2016-05-02'}, {text: '2016-05-03', value: '2016-05-03'}, {text: '2016-05-04', value: '2016-05-04'}]"
+      :filter-method="filterTimeHandler">
+      <template slot-scope="scope">
+        <i class="el-icon-time"></i>
+        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="姓名"
+      width="180">
+      <template slot-scope="scope">
+        <el-popover  trigger="hover" placement="top">
+          <p>姓名: {{ scope.row.name }}</p>
+          <p>住址: {{ scope.row.address }}</p>
+          <div slot="reference" class="name-wrapper" >
+            <el-tag size="medium" >{{ scope.row.name }}</el-tag>
+          </div>
+        </el-popover>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="地址"
+      prop="address"
+      :formatter="formatDress">
+      <template slot-scope="scope">
+        <span style="margin-left: 10px">{{ scope.row.address }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      label="标签"
+      prop="tag"
+      width="100"
+      filter-placement="bottom-end"
+      :filters="tagArr"
+      :filter-method="filterTagHandler">
+      <template slot-scope="scope">
+        <el-tag disable-transitions style="margin-left: 10px">{{ scope.row.tag }}</el-tag>
+      </template>
+    </el-table-column>
+    <el-table-column label="操作">
+      <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="handleInfo(scope.$index, scope.row)">详情</el-button>
+        <el-button
+          size="mini"
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+        <el-button
+          size="mini"
+          type="danger"
+          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+  <div style="margin-top: 20px">
+    <p>单选（注意默认排序得影响）</p>
+    <el-button @click="setCurrent(tableData[0])">选中第二行</el-button>
+    <el-button @click="setCurrent()">取消选择</el-button>
+    <p>多选（注意默认排序得影响）</p>
+    <el-button @click="toggleSelection([tableData[1], tableData[2]])">选中第二行和第三行</el-button>
+    <el-button @click="toggleSelection()">取消选择</el-button>
+  </div>
+</div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄',
+          tag: '家'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄',
+          tag: '公司'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄',
+          tag: '家'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄',
+          tag: '公司'
+        }],
+        currentRow: null,
+        tagArr:[{text:"家",value:"家"},{text:"公司",value:"公司"}]
+      }
+    },
+    methods: {
+      setCurrent(row) {
+        console.log(this.$refs)
+        this.$refs.singleTable.setCurrentRow(row);
+      },
+      toggleSelection(rows){
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.singleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.singleTable.clearSelection();
+        }
+      },
+      handleCurrentChange(val) {
+        console.log(val,"单选项")
+       // this.currentRow = val;
+      },
+      handleSelectionChange(val){
+        console.log(val,"多选项触发得事件")
+      },
+      filterTagHandler(value, row, column) {
+        return row.tag === value;
+      },
+      filterTimeHandler(value, row, column) {
+        const property = column['property'];
+        return row[property] === value;
+      },
+      formatDress(row, column) {
+        console.log(row,"row")
+        return row.address + "hhhhhh";
+      },
+      handleInfo(index,row){
+
+      },
+      handleEdit(index, row) {
+        console.log(index, row);
+      },
+      handleDelete(index, row) {
+        console.log(index, row);
+        this.$confirm('确定删除此用户吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      }
+      
+    }
+  }
+</script>
+<style lang="scss">
+.table-wrap{
+  padding: 20px;
+  .name-wrapper{
+    display: inline-block;
+  }
+}
+</style>
