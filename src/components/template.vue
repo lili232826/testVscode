@@ -1,7 +1,9 @@
 <template>
  <div>
    {{$route.name}}
+    <router-view/>
  </div>
+
 </template>
 
 <script>

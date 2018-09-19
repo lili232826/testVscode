@@ -1,8 +1,6 @@
 <template>
-  <div id="app">
-    <div class="app-header">
-      <div class="title">后台管理系统</div>
-    </div>
+  <div id="app"> 
+    <app-header></app-header>
     <div class="app-content">
       <div class="side-left">
         <app-nav></app-nav>
@@ -24,11 +22,13 @@
 </template>
 
 <script>
+import AppHeader from "@/components/common/AppHeader"
 import AppNav from "@/components/common/AppNav";
 export default {
   name: 'app',
   components: {
-    AppNav
+    AppNav,
+    AppHeader
   },
   methods: {
    // tab切换时，动态的切换路由
@@ -42,7 +42,8 @@ export default {
     },
     tabRemove (targetName) {
       // 首页不可删除
-      if(targetName == '/') {
+      console.log(targetName,'targetName')
+      if(targetName == '/'||targetName =="/index") {
         return;
       }
       this.$store.commit('delete_tabs', targetName);
@@ -52,7 +53,7 @@ export default {
           this.$store.commit('set_active_index', this.options[this.options.length-1].route);
           this.$router.push({path: this.activeIndex});
         } else {
-          this.$router.push({path: '/'});
+          this.$router.push({path: '/index'});
         }
       }
     }
@@ -74,16 +75,16 @@ export default {
     '$route'(to) {
       let flag = false;
       for (let option of this.options ) {
-        
         if (option.name === to.name) {
           flag = true;
-          this.$store.commit('set_active_index', '/' + to.path.split('/')[1]);
+          this.$store.commit('set_active_index', '/' + to.path.slice(1));
           break
         }
       }
       if (!flag) {
-        this.$store.commit('add_tabs', {route: '/' + to.path.split('/')[1], name: to.name});
-        this.$store.commit('set_active_index', '/' + to.path.split('/')[1]);
+        console.log(to.path.split('/'),"to")
+        this.$store.commit('add_tabs', {route: '/' + to.path.slice(1), name: to.name});
+        this.$store.commit('set_active_index', '/' + to.path.slice(1));
       }
     }
   }
@@ -91,6 +92,7 @@ export default {
 </script>
 
 <style lang="scss">
+//@import url('@/../static/reset.css');
 html, body {
   height: 100%;
   margin: 0;
@@ -105,15 +107,6 @@ html, body {
   height: 100%;
  flex-flow: column;
  overflow: hidden;
-}
-.app-header {
-  padding:0 20px;
-  color: #fff;
-  font-size: 24px;
-  flex: 0 0 60px;
-  height: 60px;
-  background-color:#2c3e50;
-  line-height: 60px;
 }
 .app-content{
     flex:1;
@@ -134,6 +127,7 @@ html, body {
       height: calc(100% - 70px);
       border:1px solid #dcdfe6;
       border-top-color:transparent;
+      overflow-y: scroll
     }
 }
 </style>

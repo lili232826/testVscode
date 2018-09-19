@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// 用户管理
 import UserList from '@/components/UserList'
+//登陆人的信息
+import PersonalInfo from '@/components/PersonalInfo'
 import Template from '@/components/template'
 
 Vue.use(Router)
@@ -8,8 +11,14 @@ Vue.use(Router)
 export default new Router({
     routes: [{
             path: '/',
+            redirect: '/index', //重定向到默认首页
+        }, {
+            path: '/index',
             name: '首页',
-            component: Template
+            component: Template,
+            children: [
+                { path: 'personalInfo', component: PersonalInfo, name: '个人信息' }
+            ]
         },
         {
             path: '/user',

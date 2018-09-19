@@ -2,7 +2,7 @@
 <div class="table-wrap">
   <el-table
     ref="singleTable"
-    :data="tableData"
+    :data="pageDate"
     stripe
     border
     highlight-current-row
@@ -59,7 +59,7 @@
       :filters="tagArr"
       :filter-method="filterTagHandler">
       <template slot-scope="scope">
-        <el-tag disable-transitions style="margin-left: 10px">{{ scope.row.tag }}</el-tag>
+        <el-tag :type="scope.row.tag === '家' ? 'primary':'success'" disable-transitions style="margin-left: 10px">{{ scope.row.tag }}</el-tag>
       </template>
     </el-table-column>
     <el-table-column label="操作">
@@ -77,6 +77,18 @@
       </template>
     </el-table-column>
   </el-table>
+  <div class="page-container" style="margin-top:20px">
+    <el-pagination
+      layout="total,sizes,prev, pager, next,jumper"
+      background
+      :current-page="currentPage4"
+      :page-sizes="[10 ,20]"
+      :page-size="10"
+      :total="tableData.length"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentPageChange">
+    </el-pagination>
+  </div>
   <div style="margin-top: 20px">
     <p>单选（注意默认排序得影响）</p>
     <el-button @click="setCurrent(tableData[0])">选中第二行</el-button>
@@ -89,35 +101,32 @@
 </template>
 
 <script>
+import tableList from "@/data/tableList";
+console.log(tableList,"list")
   export default {
     data() {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          tag: '家'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          tag: '公司'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          tag: '家'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-          tag: '公司'
-        }],
+        tableData: tableList,
         currentRow: null,
-        tagArr:[{text:"家",value:"家"},{text:"公司",value:"公司"}]
+        tagArr:[{text:"家",value:"家"},{text:"公司",value:"公司"}],
+        currentPage4: 1,
+        pageDate:[],
+        size:10,
       }
     },
+    mounted:function(){
+      var vm=this;
+      this.getList();
+    },
+    created: function () {
+      //this.pageDate=this.tableData.splice(0,this.size);
+    },
     methods: {
+      getList(){
+        var vm=this;
+        var start=(vm.currentPage4-1)*vm.size;
+        vm.pageDate= vm.tableData.slice(start,start+vm.size)
+      },
       setCurrent(row) {
         console.log(this.$refs)
         this.$refs.singleTable.setCurrentRow(row);
@@ -149,19 +158,32 @@
         console.log(row,"row")
         return row.address + "hhhhhh";
       },
+      handleSizeChange(val){//切换每页的条数
+        //console.log(`Size:${val}`);
+        this.size=val;
+        this.getList()
+      },
+      handleCurrentPageChange(val){//切换当前的页码
+        //console.log(`Current:${val}`);
+        this.currentPage4=val;
+        this.getList()
+      },
       handleInfo(index,row){
 
       },
       handleEdit(index, row) {
-        console.log(index, row);
+        //console.log(index, row);
       },
       handleDelete(index, row) {
-        console.log(index, row);
+        console.log(index, row.id);
         this.$confirm('确定删除此用户吗？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          //console.log(this)
+          this.tableData.splice(this.tableData.findIndex(item => item.id === row.id), 1)
+          //this.tableData.splice(index,1)
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -178,6 +200,7 @@
   }
 </script>
 <style lang="scss">
+
 .table-wrap{
   padding: 20px;
   .name-wrapper{
