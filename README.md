@@ -32,3 +32,8 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1:element-ui的
 2:排序，删除，选择一行或多行，分页
 3:引入了tableList.js文件当数据
+
+##个人信息映入图标echarts
+1:编辑信息是两部分的显示,form 和 列表
+2:npm install echarts-gl --save
+3:切换主题，你加载了不同的主题样式表

@@ -202,7 +202,11 @@ console.log(tableList,"list")
 <style lang="scss">
 
 .table-wrap{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   padding: 20px;
+  overflow-y: scroll;
   .name-wrapper{
     display: inline-block;
   }

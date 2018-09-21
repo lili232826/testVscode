@@ -15,19 +15,51 @@
                         <el-dropdown-item command="">个人信息</el-dropdown-item>
                     </router-link>
                     <el-dropdown-item>修改密码</el-dropdown-item>
-                    <el-dropdown-item>切换主题</el-dropdown-item>
+                    <el-dropdown-item><span @click="dialogVisible = true">切换主题</span></el-dropdown-item>
                     <el-dropdown-item divided>退出登陆</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
+        <el-dialog
+            title="更改主题颜色"
+            :visible.sync="dialogVisible"
+            width="50%" >
+            <el-form label-position="left" label-width="130px">
+                <el-form-item label="请选择主题颜色">
+                  <el-radio-group v-model="themeValue">
+                    <el-radio label="red">红色</el-radio>
+                    <el-radio label="blue">蓝色</el-radio>
+                    <el-radio label="green">绿色</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="handleChangeTheme">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+import { global } from "../../global/global.js"
 export default {
+    data(){
+        return {
+            dialogVisible:false,
+            themeValue:localStorage.getItem("themeValue") ? localStorage.getItem("themeValue") : 'blue'
+        }
+    },
     methods:{
+        //换肤
+        handleChangeTheme(){
+            var vm = this;
+            global.changeTheme(vm.themeValue);
+            console.log('hahahhah')
+            this.dialogVisible = false;
+        },
         setUser(command){
-            this.$message('click on item ' + command);
+            //this.$message('click on item ' + command);
         }
     }
 }

@@ -10,8 +10,10 @@
         "build": "node build/build.js"
     },
     "dependencies": {
+        "echarts": "^4.2.0-rc.1",
         "element-ui": "^2.4.7",
         "vue": "^2.5.2",
+        "vue-resource": "^1.5.1",
         "vue-router": "^3.0.1"
     },
     "devDependencies": {

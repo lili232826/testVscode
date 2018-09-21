@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss">
-//@import url('@/../static/reset.css');
+//@import url('static/reset.scss');
 html, body {
   height: 100%;
   margin: 0;
@@ -127,7 +127,7 @@ html, body {
       height: calc(100% - 70px);
       border:1px solid #dcdfe6;
       border-top-color:transparent;
-      overflow-y: scroll
+      // overflow-y: scroll
     }
 }
 </style>
