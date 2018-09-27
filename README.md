@@ -37,3 +37,27 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1:编辑信息是两部分的显示,form 和 列表
 2:npm install echarts-gl --save
 3:切换主题，你加载了不同的主题样式表
+
+##vuex管理数据
+
+######state 管理全局数据
+state:{
+    msgNum:100
+}
+使用 this.$store.state.msgNum
+
+######mutations 里面可以修改state里面的数据,(同步函数)；
+mutations:{
+    setMsgNum(state,parme){
+        state.msgNum=parme
+    }
+}
+调用 this.$store.commit('setMsgNum',999)
+
+######getters 直接对数据进行处理，各个组件在引用
+getters: {
+    arrFilter(state) {
+        return state.arrList.filter(item => item % 2 !== 0)
+    }
+},
+调用this.$store.getters.arrFilter

@@ -1,17 +1,43 @@
 <template>
  <div>
    {{$route.name}}
-    <router-view/>
+  <div>
+    <el-button size="small">{{activeIndex}}</el-button>
+    <el-button size="small">{{msgNum}}</el-button>
+    <el-button size="small">{{id}}</el-button>
+    <el-button size="small">{{name}}</el-button>
+    <el-tag >{{arrFilter}}</el-tag>
+  </div>
+  <router-view/>
  </div>
 
 </template>
 
 <script>
+import {mapState} from "vuex";
+import {mapGetters} from "vuex";
 export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  computed:{
+    ...mapState({
+      activeIndex: 'activeIndex',//字符串activeIndex等于activeIndex => state.activeIndex
+      msgNum:state => state.msgNum,
+      id:state => state.testFnObj.id,
+      name(state){
+        return state.testFnObj.name + this.msg;
+      }
+    }),
+    // arrFilter () {
+    //   return this.$store.getters.arrFilter
+    // },
+    ...mapGetters([
+      'arrFilter'
+    ])
+    
   }
 }
 </script>

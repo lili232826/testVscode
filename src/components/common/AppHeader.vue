@@ -2,6 +2,8 @@
     <div class="app-header">
         后台管理系统
         <div style="float:right;">
+            <span style="font-size:14px;">评论</span>
+            <el-badge class="mark" :value="msgNum" />
             <el-dropdown @command="setUser">
                 <span class="el-dropdown-link">
                     <span class="user-name">admin</span>
@@ -43,6 +45,7 @@
 
 <script>
 import { global } from "../../global/global.js"
+import { mapMutations,mapActions } from 'vuex'
 export default {
     data(){
         return {
@@ -52,6 +55,7 @@ export default {
     },
     methods:{
         //换肤
+        
         handleChangeTheme(){
             var vm = this;
             global.changeTheme(vm.themeValue);
@@ -60,7 +64,32 @@ export default {
         },
         setUser(command){
             //this.$message('click on item ' + command);
+        },
+        // setMsgNum(){
+        //     this.$store.commit('setMsgNum',999)
+        // },
+        //同下面三行一个意思
+        ...mapMutations([
+            'setMsgNum'
+        ]),
+        // setCount () {
+        //     this.$store.dispatch('setCount', {count: 1233})
+        // },
+        ...mapActions([
+            'setCount'// 将 `this.setCount()` 映射为 `this.$store.dispatch('increment')`
+        ])
+        
+    },
+    mounted:function(){
+        this.setMsgNum(98);
+        this.setCount({count: 1233});//active方法改变msgNum
+        
+    },
+    computed:{
+        msgNum(){
+            return this.$store.state.msgNum;
         }
+        
     }
 }
 </script>

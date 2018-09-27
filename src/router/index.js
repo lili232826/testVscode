@@ -4,6 +4,10 @@ import Router from 'vue-router'
 import UserList from '@/components/UserList'
 //登陆人的信息
 import PersonalInfo from '@/components/PersonalInfo'
+
+//意见反馈
+
+import Suggest from "@/components/Suggest"
 import Template from '@/components/template'
 
 Vue.use(Router)
@@ -58,7 +62,7 @@ export default new Router({
         {
             path: '/feedback',
             name: '意见反馈',
-            component: Template
+            component: Suggest
         },
         {
             path: '*',

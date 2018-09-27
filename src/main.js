@@ -6,9 +6,12 @@ import router from './router'
 import store from '@/store/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import VueWaves from 'vue-waves/dist/vue-waves.js'
 Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示
 
 Vue.config.productionTip = false
+
+Vue.use(VueWaves);
 Vue.use(ElementUI);
 /* eslint-disable no-new */
 new Vue({

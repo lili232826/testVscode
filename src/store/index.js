@@ -10,9 +10,16 @@ const store = new Vuex.Store({
     state: {
         options: [],
         activeIndex: '/user',
-        userInfo: {}
+        userInfo: {},
+        msgNum: 40,
+        testFnObj: {
+            "id": 10,
+            "name": "张三"
+        },
+        test: 88,
+        arrList: [1, 2, 4, 5, 8, 9, 11]
     },
-    mutations: {
+    mutations: { //同步函数
         // 添加tabs
         add_tabs(state, data) {
             this.state.options.push(data);
@@ -35,8 +42,26 @@ const store = new Vuex.Store({
         // 设置详情信息
         save_detail_info(state, info) {
             this.state.userInfo = info;
+        },
+        testFn(state) {
+            state.msgNum = 200;
+        },
+        setMsgNum(state, n) {
+            state.msgNum = n;
+            console.log("jjj")
+        }
+    },
+    getters: {
+        arrFilter(state) {
+            return state.arrList.filter(item => item % 2 !== 0)
+        }
+    },
+    actions: {
+        setCount({ commit }, data) {
+            commit('setMsgNum', data.count)
         }
     }
+
 });
 
 export default store;
