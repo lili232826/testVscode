@@ -11,6 +11,7 @@ const store = new Vuex.Store({
         options: [],
         activeIndex: '/user',
         userInfo: {},
+        token: '',
         msgNum: 40,
         testFnObj: {
             "id": 10,
@@ -54,6 +55,9 @@ const store = new Vuex.Store({
     getters: {
         arrFilter(state) {
             return state.arrList.filter(item => item % 2 !== 0)
+        },
+        userInfo(state) {
+            return state.token;
         }
     },
     actions: {

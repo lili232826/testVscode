@@ -40,18 +40,46 @@ export default {
     
   },
   mounted() {
+    var Vue=this;
+    var loading=null;
+    // 添加请求拦截器
+    Vue.axios.interceptors.request.use(function (config) {
+      // 在发送请求之前做些什么
+      console.log("before")
+          loading = Vue.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          });
+      return config;
+    }, function (error) {
+      // 对请求错误做些什么
+      return Promise.reject(error);
+    });
+    // 添加响应拦截器
+    Vue.axios.interceptors.response.use(function (response) {
+      // 对响应数据做点什么
+      console.log("after")
+      loading.close();
+      return response;
+    }, function (error) {
+      // 对响应错误做点什么
+      return Promise.reject(error);
+    });
+
     this.getAjax();
   },
   methods:{
       getAjax:function () {
         console.log(this.axios)
-        // this.axios.get('/data/test.json')
-        //   .then(function (response) {
-        //     console.log(response.data,"data");
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
+        this.axios.get('/static/test.json')
+          .then(function (response) {
+            console.log(response.data,"data");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
   }
 }
