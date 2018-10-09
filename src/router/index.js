@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+//首页
+import Index from "@/components/Index"
 // 用户管理
 import UserList from '@/components/UserList'
 //登陆人的信息
@@ -19,7 +22,7 @@ export default new Router({
         }, {
             path: '/index',
             name: '首页',
-            component: Template,
+            component: Index,
             children: [
                 { path: 'personalInfo', component: PersonalInfo, name: '个人信息' }
             ]

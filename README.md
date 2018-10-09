@@ -61,3 +61,11 @@ getters: {
     }
 },
 调用this.$store.getters.arrFilter
+
+## axois
+拦截器
+Vue.axios.interceptors.request.use();
+Vue.axios.interceptors.response.use();
+
+##图片懒加载
+vue-lazyload

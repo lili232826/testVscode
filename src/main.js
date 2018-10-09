@@ -5,13 +5,23 @@ import App from './App'
 import router from './router'
 import store from '@/store/index'
 import ElementUI from 'element-ui'
-import axios from 'axios';
+import axios from 'axios'
+import VueLazyload from "vue-lazyload"
 import 'element-ui/lib/theme-chalk/index.css'
 import VueWaves from 'vue-waves/dist/vue-waves.js'
 Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示
 
 Vue.use(VueWaves); //水波纹按钮
 Vue.use(ElementUI);
+
+Vue.use(VueLazyload);
+Vue.use(VueLazyload, {
+    preLoad: 1.3,
+    error: './assets/logo.gif',
+    loading: './assets/loading.gif',
+    attempt: 1
+})
+
 Vue.prototype.axios = axios;
 /* eslint-disable no-new */
 new Vue({

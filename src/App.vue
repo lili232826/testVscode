@@ -92,6 +92,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "./assets/style/common.scss";
+
 //@import url('static/reset.scss');
 html, body {
   height: 100%;
@@ -105,8 +107,8 @@ html, body {
   color: #2c3e50;
   display: flex;
   height: 100%;
- flex-flow: column;
- overflow: hidden;
+  flex-flow: column;
+  overflow: hidden;
 }
 .app-content{
     flex:1;
@@ -127,7 +129,7 @@ html, body {
       height: calc(100% - 70px);
       border:1px solid #dcdfe6;
       border-top-color:transparent;
-      // overflow-y: scroll
+      overflow-y: scroll
     }
 }
 </style>
