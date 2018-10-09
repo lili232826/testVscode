@@ -102,7 +102,7 @@
 
 <script>
 import tableList from "@/data/tableList";
-console.log(tableList,"list")
+//console.log(tableList,"list")
   export default {
     data() {
       return {

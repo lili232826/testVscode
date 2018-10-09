@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import VueResource from 'vue-resource';
-Vue.use(VueResource);
+// import Vue from 'vue';
+// import VueResource from 'vue-resource';
+// Vue.use(VueResource);
 
 import config from '../../config';
 import themeArray from './themeArray';

@@ -5,14 +5,14 @@ import App from './App'
 import router from './router'
 import store from '@/store/index'
 import ElementUI from 'element-ui'
+import axios from 'axios';
 import 'element-ui/lib/theme-chalk/index.css'
 import VueWaves from 'vue-waves/dist/vue-waves.js'
 Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示
 
-Vue.config.productionTip = false
-
-Vue.use(VueWaves);
+Vue.use(VueWaves); //水波纹按钮
 Vue.use(ElementUI);
+Vue.prototype.axios = axios;
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
