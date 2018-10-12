@@ -21,12 +21,21 @@
 <script>
 import {mapState} from "vuex";
 import {mapGetters} from "vuex";
+<<<<<<< HEAD
 //var buildData=require("../../static/data/build.json");
 //console.log(buildData)
 export default {
   data () {
     return {
       build:[],
+=======
+var buildData=require("../../static/data/build.json");
+console.log(buildData)
+export default {
+  data () {
+    return {
+      build:buildData,
+>>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
       currentDate: new Date()
     }
   },
@@ -34,6 +43,7 @@ export default {
 
   },
   mounted() {
+<<<<<<< HEAD
     var Vue=this;
     this.axios.get("/api/build",{
       params:{
@@ -46,6 +56,9 @@ export default {
       Vue.build=res.data.data;
       //console.log(res.data.data,"resdate")
     })
+=======
+
+>>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
   },
   methods:{
      
@@ -60,8 +73,12 @@ export default {
     
 }
 .el-col {
+<<<<<<< HEAD
     margin-bottom: 20px;
 }
+=======
+    margin-bottom: 20px;}
+>>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
 .image{
   width: 100%;
   height: 248px;

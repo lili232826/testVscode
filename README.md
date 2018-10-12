@@ -69,5 +69,8 @@ Vue.axios.interceptors.response.use();
 
 ##图片懒加载
 vue-lazyload
+<<<<<<< HEAD
 注意：loading图片在static文件下，使用相对路径；
 在assets里面，使用require("路径")；
+=======
+>>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b

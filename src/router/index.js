@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+<<<<<<< HEAD
 
 //登陆页
 import Login from "@/views/Login/Login"
@@ -9,6 +10,10 @@ import Login from "@/views/Login/Login"
 import Layout from "@/views/Layindex/Layout"
 //首页
 import Index from '@/components/Index'
+=======
+//首页
+import Index from "@/components/Index"
+>>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
 // 用户管理
 import UserList from '@/components/UserList'
 //登陆人的信息
@@ -31,9 +36,14 @@ export default new Router({
             redirect: '/index/pic', //重定向到默认首页
         }, {
             path: '/index',
+<<<<<<< HEAD
             name: '',
             component: Layout,
             redirect: '/index/pic',
+=======
+            name: '首页',
+            component: Index,
+>>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
             children: [
                 { path: 'pic', component: Index, name: '首页' },
                 { path: 'personalInfo', component: PersonalInfo, name: '个人信息' }
