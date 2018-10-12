@@ -14,7 +14,6 @@ Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示
 Vue.use(VueWaves); //水波纹按钮
 Vue.use(ElementUI);
 
-<<<<<<< HEAD
 let loadingPic = require('./assets/loading.gif');
 Vue.use(VueLazyload, {
     // preLoad: 1.3,
@@ -50,16 +49,6 @@ router.beforeEach((to, from, next) => {      
     //     // }
     // })
 
-=======
-Vue.use(VueLazyload);
-Vue.use(VueLazyload, {
-    preLoad: 1.3,
-    error: './assets/logo.gif',
-    loading: './assets/loading.gif',
-    attempt: 1
-})
-
->>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
 Vue.prototype.axios = axios;
 /* eslint-disable no-new */
 new Vue({

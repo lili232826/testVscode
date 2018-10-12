@@ -12,11 +12,7 @@ const portfinder = require('portfinder')
 
 const express = require('express')
 const app = express()
-<<<<<<< HEAD
 var buildData = require('../src/data/buildApi.json')
-=======
-var appData = require('../src/data/test.json')
->>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
 var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 
@@ -53,21 +49,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
             poll: config.dev.poll,
         },
         before(app) {
-<<<<<<< HEAD
             app.get("/api/build", function(req, res) {
                 res.json({
                     errno: 0,
                     data: buildData
                 })
             })
-=======
-            // app.get("/api/user", function(req, res) {
-            //     res.json({
-            //         errno: 0,
-            //         data: appData
-            //     })
-            // })
->>>>>>> 8c08a85b4c2b0c7a7d353d46cce80de20edcc33b
         }
     },
     plugins: [
