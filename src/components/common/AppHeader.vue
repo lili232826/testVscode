@@ -18,7 +18,7 @@
                     </router-link>
                     <el-dropdown-item>修改密码</el-dropdown-item>
                     <el-dropdown-item><span @click="dialogVisible = true">切换主题</span></el-dropdown-item>
-                    <el-dropdown-item divided>退出登陆</el-dropdown-item>
+                    <el-dropdown-item ><span @click="signOut">退出登陆</span></el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
@@ -70,15 +70,20 @@ export default {
         // },
         //同下面三行一个意思
         ...mapMutations([
-            'setMsgNum'
+            'setMsgNum',
+            'clearOption'
         ]),
         // setCount () {
         //     this.$store.dispatch('setCount', {count: 1233})
         // },
         ...mapActions([
             'setCount'// 将 `this.setCount()` 映射为 `this.$store.dispatch('increment')`
-        ])
-        
+        ]),
+        signOut(){
+            console.log("out")
+            this.clearOption()// //清空tab项，options
+            this.$router.push('/login')
+        }
     },
     mounted:function(){
         this.setMsgNum(98);

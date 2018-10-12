@@ -71,3 +71,11 @@ Vue.axios.interceptors.response.use();
 vue-lazyload
 注意：loading图片在static文件下，使用相对路径；
 在assets里面，使用require("路径")；
+
+##登陆
+1: router.beforeEach(),先进登陆页面,main.js里面；
+2：模拟接口:webpack.dev.conf.js
+3：判断用户名密码
+
+##登出
+清空state里面的option

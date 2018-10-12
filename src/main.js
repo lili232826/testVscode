@@ -25,10 +25,11 @@ Vue.use(VueLazyload, {
 // 全局导航钩子,没有token进去登陆页；
 router.beforeEach((to, from, next) => {      
         if (to.path == "/login") {         
-            next(); 
-            //console.log("hahaha")     
-        } else {                  
-            next({ path: "/login" })             
+            next();
+            console.log("login")     
+        } else { 
+            console.log(99999)                 
+            next()             
         }   
     })
     // router.beforeEach((to, from, next) => {

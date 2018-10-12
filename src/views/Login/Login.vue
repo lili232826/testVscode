@@ -2,15 +2,12 @@
   <div class="bg">
     <div class="form-wrap"> 
         <h3>系统登陆<i class="el-icon-view"></i></h3>
-        <el-form :model="ruleForm2" status-icon :rules="rules2" ref="loginForm" class="demo-ruleForm">
+        <el-form :model="LoginForm2" status-icon :rules="rules2" ref="loginForm" class="demo-ruleForm">
+            <el-form-item label="" prop="name">
+                <el-input type="text" v-model="LoginForm2.name" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item label="" prop="pass">
-                <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="" prop="checkPass">
-                <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="" prop="age">
-                <el-input v-model.number="ruleForm2.age"></el-input>
+                <el-input type="password" v-model="LoginForm2.pass" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('loginForm')" style="width:100%">提交</el-button>
@@ -24,68 +21,54 @@
 export default {
     name:"login",
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
+      var validateName = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入用户名'));
+        } 
+        callback()
+      };  
       var validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
+        } 
+        callback()
+      };   
       return {
-        ruleForm2: {
+        LoginForm2: {
+          name: '',
           pass: '',
-          checkPass: '',
-          age: ''
         },
         rules2: {
+          name: [
+            { validator: validateName, trigger: 'blur' }
+          ],
           pass: [
             { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
           ]
         }
       };
     },
     mounted(){
-      //this.fn()
+
     },
     methods: {
       submitForm(formName) {
+        var Vue=this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            this.axios.post("/api/login",{
+              'username':Vue.LoginForm2.name,
+              'password':Vue.LoginForm2.pass
+            }).then((res)=>{
+              if(res.data.error){
+                alert(res.data.error)
+              }else{
+                alert("欢迎"+res.data);
+                this.$router.push('/')
+              }
+            }).catch(function (error) {
+              //console.log(error);
+            });
           } else {
             console.log('error submit!!');
             return false;
@@ -94,16 +77,8 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      },
-      fn(){
-        if(this.$route.query.redirect){
-        //     let redirect = decodeURIComponent(this.$route.query.redirect);
-              let redirect = this.$route.query.redirect;
-              this.$router.push(redirect);
-        }else{
-              this.$router.push('/');
-        }
       }
+     
     }
 }
 

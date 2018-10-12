@@ -12,8 +12,15 @@ const portfinder = require('portfinder')
 
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+
 var buildData = require('../src/data/buildApi.json')
+var loginData = require('../src/data/loginApi.json')
 var apiRoutes = express.Router()
+
+//app.use(bodyParser.json()) //在其他路由中间件前（尽可能靠前，以能够通过bodyPaser获取req.body）
+var jsonParser = bodyParser.json();
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/api', apiRoutes)
 
 
@@ -54,6 +61,40 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                     errno: 0,
                     data: buildData
                 })
+            });
+            app.post("/api/login", jsonParser, function(req, res) {
+                if (!req.body) return res.sendStatus(400)
+                var username = req.body.username;
+                var password = req.body.password;
+                for (var i = 0; i < loginData.users.length; i++) {
+                    var name = loginData.users[i].username;
+                    var pass = loginData.users[i].password;
+                    if (username == name) {
+                        if (password == pass) {
+                            res.send(name);
+                            break;
+                        } else {
+                            res.send({
+                                "state": 1,
+                                "error": "密码不正确"
+                            });
+                            break;
+                        }
+                    } else {
+                        continue
+                    }
+                    console.log("888888888888888888888")
+                    res.send({
+                        "state": 1,
+                        "error": "用户名不存在"
+                    });
+                }
+                //var name=req.body.name;
+                //var pass=req.body.pass;
+                // res.json({
+                //     errno: 0,
+                //     data: loginData
+                // })
             })
         }
     },

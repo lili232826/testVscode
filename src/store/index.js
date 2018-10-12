@@ -50,6 +50,9 @@ const store = new Vuex.Store({
         setMsgNum(state, n) {
             state.msgNum = n;
             console.log("jjj")
+        },
+        clearOption(state) {
+            this.state.options = [];
         }
     },
     getters: {
