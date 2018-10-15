@@ -23,6 +23,9 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 app.use('/api', apiRoutes)
 
+//图片上传
+const formidable = require('formidable')
+app.use(express.static(__dirname + "./../page"));
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -95,7 +98,32 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                 //     errno: 0,
                 //     data: loginData
                 // })
+            });
+            app.post("/api/headerPic", jsonParser, function(req, res) {
+                var form = new formidable.IncomingForm();
+                form.encoding = 'utf-8';
+                form.uploadDir = path.join(__dirname + "/../page/upload");
+                form.keepExtensions = true; //保留后缀
+                form.maxFieldsSize = 2 * 1024 * 1024;
+                //处理图片
+                form.parse(req, function(err, fields, files) {
+                    console.log(files.the_file);
+                    var filename = files.the_file.name
+                    var nameArray = filename.split('.');
+                    var type = nameArray[nameArray.length - 1];
+                    var name = '';
+                    for (var i = 0; i < nameArray.length - 1; i++) {
+                        name = name + nameArray[i];
+                    }
+                    var date = new Date();
+                    var time = '_' + date.getFullYear() + "_" + date.getMonth() + "_" + date.getDay() + "_" + date.getHours() + "_" + date.getMinutes();
+                    var avatarName = name + time + '.' + type;
+                    var newPath = form.uploadDir + "/" + avatarName;
+                    fs.renameSync(files.the_file.path, newPath); //重命名
+                    res.send({ data: "/upload/" + avatarName })
+                })
             })
+
         }
     },
     plugins: [

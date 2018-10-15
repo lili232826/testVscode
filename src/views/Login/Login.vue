@@ -64,6 +64,7 @@ export default {
                 alert(res.data.error)
               }else{
                 alert("欢迎"+res.data);
+                this.$store.commit('setUser',res.data)
                 this.$router.push('/')
               }
             }).catch(function (error) {

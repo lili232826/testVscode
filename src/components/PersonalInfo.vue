@@ -4,12 +4,22 @@
       <el-col :span="8">
         <div class="grid-content ">
           <div class="user-info">
-            <div class="radius-box">
+            <el-upload
+              class="avatar-uploader"
+              action="/api/headerPic"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+
+            <!-- <div class="radius-box">
               <img src="../assets/admin.jpg" alt="header_pic">
-            </div>
-            <div style="margin-bottom:20px">
+            </div> -->
+            <!-- <div style="margin-bottom:20px">
               <el-button type="primary"><i class="el-icon-upload el-icon--left"></i>上传头像</el-button>
-            </div>
+            </div> -->
           </div>
         </div>
       </el-col>
@@ -94,6 +104,7 @@ var echarts = require('echarts');
 export default {
   data() {
       return {
+         imageUrl: '',
         labelPosition: 'right',
         editable:false,//编辑form默认为false
         formUser: {
@@ -141,6 +152,25 @@ export default {
                 }
             ]
         })
+    },
+    methods:{
+      handleAvatarSuccess(res, file) {
+        console.log(res.data,"data")
+        this.imageUrl = URL.createObjectURL(file.raw);
+        console.log(imageUrl,"url")
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      }
     }
 }
 </script>
@@ -185,4 +215,28 @@ h2{
 #income,#interest{
   height: 400px;
 }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+ .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    }
+    .el-upload:hover{
+    border-color: #409EFF;
+    }
+
 </style>

@@ -6,7 +6,7 @@
             <el-badge class="mark" :value="msgNum" />
             <el-dropdown @command="setUser">
                 <span class="el-dropdown-link">
-                    <span class="user-name">admin</span>
+                    <span class="user-name">{{msgUser}}</span>
                     <div class="user-pic">
                         <img src="../../assets/admin.jpg" alt="头像">
                     </div>
@@ -62,22 +62,24 @@ export default {
             console.log('hahahhah')
             this.dialogVisible = false;
         },
-        setUser(command){
+        //setUser(command){
             //this.$message('click on item ' + command);
-        },
+        //},
         // setMsgNum(){
         //     this.$store.commit('setMsgNum',999)
         // },
-        //同下面三行一个意思
+        //同下面一个意思
         ...mapMutations([
             'setMsgNum',
-            'clearOption'
+            'clearOption',
+            
         ]),
         // setCount () {
         //     this.$store.dispatch('setCount', {count: 1233})
         // },
         ...mapActions([
-            'setCount'// 将 `this.setCount()` 映射为 `this.$store.dispatch('increment')`
+            'setCount'// 将 `this.setCount()` 映射为 `this.$store.dispatch('setCount')`
+
         ]),
         signOut(){
             console.log("out")
@@ -93,6 +95,9 @@ export default {
     computed:{
         msgNum(){
             return this.$store.state.msgNum;
+        },
+        msgUser(){
+            return this.$store.state.userInfo2.name;
         }
         
     }

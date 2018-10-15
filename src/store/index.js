@@ -10,7 +10,12 @@ const store = new Vuex.Store({
     state: {
         options: [],
         activeIndex: '/user',
-        userInfo: {},
+        userInfo: {
+
+        },
+        userInfo2: {
+            'name': 'admin2'
+        },
         token: '',
         msgNum: 40,
         testFnObj: {
@@ -50,6 +55,9 @@ const store = new Vuex.Store({
         setMsgNum(state, n) {
             state.msgNum = n;
             console.log("jjj")
+        },
+        setUser(state, n) {
+            state.userInfo2.name = n;
         },
         clearOption(state) {
             this.state.options = [];

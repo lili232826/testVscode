@@ -79,3 +79,6 @@ vue-lazyload
 
 ##登出
 清空state里面的option
+
+##图片上传
+待完善
