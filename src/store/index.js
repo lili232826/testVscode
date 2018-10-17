@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
@@ -9,14 +10,14 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         options: [],
-        activeIndex: '/user',
+        activeIndex: '/index/pic',
         userInfo: {
 
         },
         userInfo2: {
             'name': 'admin2'
         },
-        token: '',
+        token: Cookies.get('userToken'),
         msgNum: 40,
         testFnObj: {
             "id": 10,
@@ -69,11 +70,17 @@ const store = new Vuex.Store({
         },
         userInfo(state) {
             return state.token;
+        },
+        getToke(state) {
+            return state.token;
         }
     },
     actions: {
         setCount({ commit }, data) {
             commit('setMsgNum', data.count)
+        },
+        setUserName({ commit }, data) {
+            commit('setUser', data)
         }
     }
 

@@ -18,6 +18,8 @@
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie';
+import { mapMutations,mapActions } from 'vuex'
 export default {
     name:"login",
     data() {
@@ -63,9 +65,15 @@ export default {
               if(res.data.error){
                 alert(res.data.error)
               }else{
-                alert("欢迎"+res.data);
-                this.$store.commit('setUser',res.data)
-                this.$router.push('/')
+                alert("欢迎777"+res.data);
+                // 按一天8小时工作制设置过期时间
+                Cookies.set('userToken', res.data,{ expires: 1/3}); //设置token
+                alert(Cookies.get('userToken'),"cookies")
+               // Cookies.set('userId', res.data,{ expires: 1/3}); //设置用户id，
+                //Vue.setUserName( res.data)//设置用户名
+                //this.$store.commit('setUser',res.data)
+                this.$router.push('/');
+                //this.$router.go(1);
               }
             }).catch(function (error) {
               //console.log(error);
@@ -78,7 +86,10 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      },
+      ...mapActions([
+        'setUserName'
+      ])
      
     }
 }

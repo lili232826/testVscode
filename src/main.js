@@ -23,14 +23,41 @@ Vue.use(VueLazyload, {
 })
 
 // 全局导航钩子,没有token进去登陆页；
-router.beforeEach((to, from, next) => {      
-        if (to.path == "/login") {         
-            next();
-            console.log("login")     
-        } else { 
-            console.log(99999)                 
-            next()             
-        }   
+router.beforeEach((to, from, next) => { 
+        console.log(store.getters.getToke, 'store.getters.token') 
+
+        if (store.getters.getToke) {
+            console.log("1")
+            next()
+        } else {
+            console.log("2")
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        }
+
+
+        // if (store.getters.token) {
+        //if (to.path === '/login') {
+        // next({ path: '/index/pic' });
+        // } else {
+        // next({ path: '/index/pic' });
+        //  }
+        // console.log(store.getters.token, 'store.getters.token')
+        // next({ path: '/index/pic' });
+
+        //} else {
+        // next('/login'); // 否则全部重定向到登录页
+        // } 
+        // next('/index/pic'); // 否则全部重定向到登录页   
+        // if (to.path == "/login") {         
+        //     next();
+        //     console.log("login")     
+        // } else { 
+        //     console.log(99999)                 
+        //next('/login')             
+        // }   
     })
     // router.beforeEach((to, from, next) => {
     //     //判断该路由是否需要登录权限

@@ -1,53 +1,79 @@
 [{
         "name": "金泰大厦",
-        "pic": "jintai.png"
+        "pic": "jintai.png",
+        "rate": 3.9,
+        "id": 101
+    },
+    {
+        "name": "金泰富地大厦",
+        "pic": "fudi.png",
+        "rate": 4.0,
+        "id": 102
     },
     {
         "name": "金泰大厦",
-        "pic": "fudi.png"
+        "pic": "guoji.png",
+        "rate": 3.9,
+        "id": 103
     },
     {
         "name": "金泰大厦",
-        "pic": "guoji.png"
+        "pic": "banner01.jpg",
+        "rate": 3.9,
+        "id": 104
     },
     {
         "name": "金泰大厦",
-        "pic": "banner01.jpg"
+        "pic": "fudi.png",
+        "rate": 3.9,
+        "id": 105
     },
     {
         "name": "金泰大厦",
-        "pic": "fudi.png"
+        "pic": "guoji.png",
+        "rate": 3.9,
+        "id": 106
     },
     {
         "name": "金泰大厦",
-        "pic": "guoji.png"
+        "pic": "0495.jpg",
+        "rate": 3.9,
+        "id": 107
     },
     {
         "name": "金泰大厦",
-        "pic": "0495.jpg"
+        "pic": "fudi.png",
+        "rate": 3.9,
+        "id": 108
     },
     {
         "name": "金泰大厦",
-        "pic": "fudi.png"
+        "pic": "0495.jpg",
+        "rate": 3.9,
+        "id": 109
     },
     {
         "name": "金泰大厦",
-        "pic": "0495.jpg"
+        "pic": "banner01.jpg",
+        "rate": 3.2,
+        "id": 206
     },
     {
         "name": "金泰大厦",
-        "pic": "banner01.jpg"
+        "pic": "fudi.png",
+        "rate": 3.9,
+        "id": 207
     },
     {
         "name": "金泰大厦",
-        "pic": "fudi.png"
+        "pic": "guoji.png",
+        "rate": 3.9,
+        "id": 208
     },
     {
         "name": "金泰大厦",
-        "pic": "guoji.png"
-    },
-    {
-        "name": "金泰大厦",
-        "pic": "banner01.jpg"
+        "pic": "banner01.jpg",
+        "rate": 5.0,
+        "id": 209
     }
 ]

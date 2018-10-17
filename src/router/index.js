@@ -30,8 +30,15 @@ export default new Router({
             name: '',
             component: Layout,
             redirect: '/index/pic',
-            children: [
-                { path: 'pic', component: Index, name: '首页' },
+            children: [{
+                    path: 'pic',
+                    component: Index,
+                    name: '首页',
+                    meta: {
+                        /*标明需要登录*/
+                        auth: true
+                    }
+                },
                 { path: 'personalInfo', component: PersonalInfo, name: '个人信息' }
             ]
         },

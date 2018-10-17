@@ -2,9 +2,8 @@
     <div class="app-header">
         后台管理系统
         <div style="float:right;">
-            <span style="font-size:14px;">评论</span>
-            <el-badge class="mark" :value="msgNum" />
-            <el-dropdown @command="setUser">
+            <span style="font-size:14px;">评论 <el-badge class="mark" :value="msgNum" /></span>
+            <el-dropdown @command="set">
                 <span class="el-dropdown-link">
                     <span class="user-name">{{msgUser}}</span>
                     <div class="user-pic">
@@ -44,6 +43,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
 import { global } from "../../global/global.js"
 import { mapMutations,mapActions } from 'vuex'
 export default {
@@ -62,9 +62,9 @@ export default {
             console.log('hahahhah')
             this.dialogVisible = false;
         },
-        //setUser(command){
+        set(command){
             //this.$message('click on item ' + command);
-        //},
+        },
         // setMsgNum(){
         //     this.$store.commit('setMsgNum',999)
         // },
@@ -83,6 +83,7 @@ export default {
         ]),
         signOut(){
             console.log("out")
+            Cookies.remove('userToken');
             this.clearOption()// //清空tab项，options
             this.$router.push('/login')
         }
@@ -97,7 +98,7 @@ export default {
             return this.$store.state.msgNum;
         },
         msgUser(){
-            return this.$store.state.userInfo2.name;
+            return Cookies.get("userToken");
         }
         
     }

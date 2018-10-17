@@ -5,7 +5,14 @@
         <el-card :body-style="{ padding: '0px' }">
           <img v-lazy="'../../static/images/' + item.pic" class="image">
           <div style="padding: 14px;">
-            <span>{{item.name}}</span>
+            <span style="vertical-align: middle;">{{item.name}}</span>
+            <el-rate
+              v-model="item.rate"
+              disabled
+              show-score
+              text-color="#ff9900"
+              score-template="{value}">
+            </el-rate>
             <div class="bottom clearfix">
               <time class="time">{{ currentDate }}</time>
               <el-button type="text" class="button">操作按钮</el-button>
@@ -58,6 +65,9 @@ export default {
 .wrap{
     @include padding(20px);
     
+}
+.el-rate{
+  display: inline-block;
 }
 .el-col {
     margin-bottom: 20px;
