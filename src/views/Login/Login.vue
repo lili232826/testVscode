@@ -7,7 +7,7 @@
                 <el-input type="text" v-model="LoginForm2.name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="" prop="pass">
-                <el-input type="password" v-model="LoginForm2.pass" autocomplete="off"></el-input>
+                <el-input type="password" v-model="LoginForm2.pass" autocomplete="off" @keyup.enter.native="submitForm('loginForm')"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('loginForm')" style="width:100%">提交</el-button>
@@ -55,6 +55,7 @@ export default {
     },
     methods: {
       submitForm(formName) {
+        console.log('hhhhhhhhhhhhh')
         var Vue=this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
@@ -65,13 +66,12 @@ export default {
               if(res.data.error){
                 alert(res.data.error)
               }else{
-                alert("欢迎777"+res.data);
+                alert("欢迎"+res.data);
                 // 按一天8小时工作制设置过期时间
                 Cookies.set('userToken', res.data,{ expires: 1/3}); //设置token
-                alert(Cookies.get('userToken'),"cookies")
                // Cookies.set('userId', res.data,{ expires: 1/3}); //设置用户id，
                 //Vue.setUserName( res.data)//设置用户名
-                //this.$store.commit('setUser',res.data)
+                this.$store.commit('setToken',res.data)
                 this.$router.push('/');
                 //this.$router.go(1);
               }

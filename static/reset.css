@@ -12,3 +12,9 @@ h2 {
 .mag-bot-10 {
     margin-bottom: 10px;
 }
+
+.cart-wrap .el-input__inner {
+    padding: 0 4px !important;
+    border-radius: 0 !important;
+    text-align: center
+}

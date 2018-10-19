@@ -21,7 +21,8 @@ export default {
                 { route: '/attendence', name: '考勤管理' ,icon:"fa-calendar-check-o"},
                 { route: '/perform', name: '绩效管理',icon:"fa-line-chart"},
                 { route: '/admin', name: '系统管理',icon:"fa-gears"},
-                { route: '/feedback', name: '意见反馈',icon:"fa-edit"}
+                { route: '/feedback', name: '意见反馈',icon:"fa-edit"},
+                { route: '/cart', name: '购物车',icon:"fa-shopping-cart"}
             ]
         }
     },

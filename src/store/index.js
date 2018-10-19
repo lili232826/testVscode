@@ -62,16 +62,20 @@ const store = new Vuex.Store({
         },
         clearOption(state) {
             this.state.options = [];
+        },
+        setToken(state, n) {
+            state.token = n;
         }
     },
     getters: {
         arrFilter(state) {
             return state.arrList.filter(item => item % 2 !== 0)
         },
-        userInfo(state) {
-            return state.token;
-        },
+        // userInfo(state) {
+        //     return state.token;
+        // },
         getToke(state) {
+            console.log(state.token, "hahah")
             return state.token;
         }
     },

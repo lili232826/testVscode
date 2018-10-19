@@ -76,8 +76,10 @@ vue-lazyload
 1: router.beforeEach(),先进登陆页面,main.js里面；
 2：模拟接口:webpack.dev.conf.js
 3：判断用户名密码
+4:根据是否存在token判断是否进去登陆页面
 
 ##登出
+panduan 
 清空state里面的option
 
 ##图片上传

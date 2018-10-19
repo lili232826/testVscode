@@ -84,6 +84,7 @@ export default {
         signOut(){
             console.log("out")
             Cookies.remove('userToken');
+            this.$store.commit('setToken',Cookies.get('userToken'))
             this.clearOption()// //清空tab项，options
             this.$router.push('/login')
         }

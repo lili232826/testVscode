@@ -13,6 +13,9 @@ import UserList from '@/components/UserList'
 import PersonalInfo from '@/components/PersonalInfo'
 //意见反馈
 import Suggest from "@/components/Suggest"
+//购物车
+import Cart from "@/views/Cart/Cart"
+
 import Template from '@/components/template'
 
 Vue.use(Router)
@@ -111,6 +114,11 @@ export default new Router({
             children: [
                 { path: 'feedback', component: Suggest, name: '意见反馈' }
             ]
+        },
+        {
+            path: "/cart",
+            name: "购物车",
+            component: Cart
         },
         {
             path: '*',

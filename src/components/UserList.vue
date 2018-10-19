@@ -73,7 +73,7 @@
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          @click="handleDelete(pageDate, scope.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -174,15 +174,15 @@ import tableList from "@/data/tableList";
       handleEdit(index, row) {
         //console.log(index, row);
       },
-      handleDelete(index, row) {
-        console.log(index, row.id);
+      handleDelete(pageDate, row) {
+        console.log(pageDate, row.id);
         this.$confirm('确定删除此用户吗？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           //console.log(this)
-          this.tableData.splice(this.tableData.findIndex(item => item.id === row.id), 1)
+          pageDate.splice(pageDate.findIndex(item => item.id === row.id), 1)
           //this.tableData.splice(index,1)
           this.$message({
             type: 'success',

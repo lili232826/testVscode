@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VueWaves from 'vue-waves/dist/vue-waves.js'
 Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示
 
+Vue.prototype.$http = axios;
 Vue.use(VueWaves); //水波纹按钮
 Vue.use(ElementUI);
 
@@ -27,14 +28,16 @@ router.beforeEach((to, from, next) => { 
         console.log(store.getters.getToke, 'store.getters.token') 
 
         if (store.getters.getToke) {
-            console.log("1")
             next()
         } else {
-            console.log("2")
-            next({
-                path: '/login',
-                query: { redirect: to.fullPath }
-            })
+            if (to.path == "/login") {
+                next();
+            } else {
+                next({
+                    path: '/login',
+                    query: { redirect: to.fullPath }
+                })
+            }
         }
 
 

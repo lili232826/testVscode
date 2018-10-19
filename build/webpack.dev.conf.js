@@ -14,8 +14,11 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
+const url = require('url')
+
 var buildData = require('../src/data/buildApi.json')
 var loginData = require('../src/data/loginApi.json')
+var shopData = require('../src/data/shopApi.json')
 var apiRoutes = express.Router()
 
 //app.use(bodyParser.json()) //在其他路由中间件前（尽可能靠前，以能够通过bodyPaser获取req.body）
@@ -98,6 +101,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
                 //     errno: 0,
                 //     data: loginData
                 // })
+            });
+            app.get("/api/shop", function(req, res) {
+                //var parseObj = url.parse(req.url, true);
+                //req.query = parseObj.query;
+                console.log(req.query.userId, 'query')
+                res.json({
+                    errno: 0,
+                    data: shopData
+                })
             });
             app.post("/api/headerPic", jsonParser, function(req, res) {
                 var form = new formidable.IncomingForm();

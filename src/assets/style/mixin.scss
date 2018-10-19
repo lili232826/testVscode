@@ -1,3 +1,11 @@
+* {
+    font-family: tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
+}
+
 @mixin padding($num) {
     padding: $num;
+}
+
+@mixin float($pos) {
+    padding: $pos;
 }
