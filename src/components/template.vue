@@ -7,6 +7,18 @@
     <el-button size="small">{{id}}</el-button>
     <el-button size="small">{{name}}</el-button>
     <el-tag >{{arrFilter}}</el-tag>
+    <span>{{msg}}</span>
+  </div>
+  <div>
+    <el-checkbox  v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+    <div style="margin: 15px 0;"></div>
+    <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+      <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+    </el-checkbox-group>
+    <el-checkbox  v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+    <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+      <el-checkbox v-for="city in cities" :label="city.name" :key="city.name"></el-checkbox>
+    </el-checkbox-group>
   </div>
   <router-view/>
  </div>
@@ -16,10 +28,17 @@
 <script>
 import {mapState} from "vuex";
 import {mapGetters} from "vuex";
+
+const cityOptions = [{name:'上海'}, {name:'北京'}, {name:'广州'}, {name:'深圳'}];
+
 export default {
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      checkAll: false,
+      checkedCities: [],
+      cities: cityOptions,
+      isIndeterminate: true
     }
   },
   computed:{
@@ -40,6 +59,7 @@ export default {
     
   },
   mounted() {
+    //this.msg="hahahahahah";
     var Vue=this;
     var loading=null;
     // 添加请求拦截器
@@ -80,6 +100,18 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
+      },
+      handleCheckAllChange(val) {
+        const city=['上海','北京','广州','深圳']
+        this.checkedCities = val ? city : [];
+        this.isIndeterminate = false;
+        console.log(this.checkedCities,'val')
+      },
+      handleCheckedCitiesChange(value) {
+        let checkedCount = value.length;
+        //console.log(value)
+        this.checkAll = checkedCount === this.cities.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
       }
   }
 }

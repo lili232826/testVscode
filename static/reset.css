@@ -13,8 +13,10 @@ h2 {
     margin-bottom: 10px;
 }
 
-.cart-wrap .el-input__inner {
-    padding: 0 4px !important;
+.cart-wrap .td-amount .el-input__inner,
+.cart-wrap .td-amount .el-input-number--mini {
+    /* padding: 0 4px !important;
     border-radius: 0 !important;
-    text-align: center
+    text-align: center */
+    width: 100px;
 }

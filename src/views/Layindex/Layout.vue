@@ -99,7 +99,7 @@ export default {
   display: flex;
   height: 100%;
   flex-flow: column;
-  overflow: hidden;
+  // overflow: hidden;
 }
 .app-content{
     flex:1;

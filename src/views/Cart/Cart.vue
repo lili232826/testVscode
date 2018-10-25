@@ -1,13 +1,13 @@
 <template>
     <div class="container"> 
         <app-header></app-header>
-        <div class="cart-wrap clear">
+        <div class="cart-wrap clear" ref="cartWrap">
             <div class="top-bar clear">
-                <div class="left-f cart-filter-bar"><strong>全部商品</strong><span style="margin-left:8px;color:#f40;">5</span></div> 
+                <div class="left-f cart-filter-bar"><strong>全部商品</strong><span style="margin-left:8px;color:#f40;">{{listAllNum}}</span></div> 
                 <div class="right-f">已选商品（不喊运费）<span style="color:#f40;margin-right:6px">0.00</span><el-button type="info" size="mini" disabled="">结算</el-button></div>
             </div>
             <div class="bar-wrap">
-                <div class="th th-chk"><el-checkbox v-model="checked">全选</el-checkbox></div>
+                <div class="th th-chk"><el-checkbox v-model="checked" @change="handleCheckedAll">全选</el-checkbox></div>
                 <div class="th th-item">商品信息</div>
                 <div class="th th-info"></div>
                 <div class="th th-price">单价</div>
@@ -16,119 +16,71 @@
                 <div class="th th-op">操作</div>
             </div>
             <div class="shop-wrap">
-                <div class="shop-list ">
+                <div class="shop-list" v-for="(shop,index) in listDate" :key="index">
                     <div class="shop-bar">
-                        <el-checkbox ></el-checkbox>
+                        <el-checkbox  v-model="checkAll[index]" @change="handleCheckShop(checkAll[index],index)"></el-checkbox>
                         <i></i>
-                        店铺：<span>蒙沛旗舰店</span>
+                        店铺：<span>{{shop.name}}</span>
                     </div>
-                    <div class="product-list">
-                        <div class=" list clear">
-                            <div class="td td-chk"><el-checkbox v-model="checked"></el-checkbox></div>
-                            <div class="td td-item">
-                                <div class="item-pic">
-                                    <a href=""><img src="../../../static/images/shop_product/product_1.jpg" alt=""></a>
+                    <div class="product-list" >
+                        <el-checkbox-group v-model="checkedList[index]" @change="handleCheckedList(checkedList[index],index)">
+                            <div class="list clear" v-for="(item ,index) in shop.product" :key="index">
+                                <div class="td td-chk">
+                                    <!-- <el-checkbox v-model="checked"></el-checkbox> -->
+                                    
+                                        <el-checkbox :label="item.id" :key="item.id"></el-checkbox>
+                                    
                                 </div>
-                                <div class="item-info">
-                                    <div class="item-basic-info">
-                                        袜子女中筒纯棉堆堆袜韩版学院风日系黑色长袜女秋冬百搭韩国潮款
+                                <div class="td td-item">
+                                    <div class="item-pic">
+                                        <a href=""><img v-bind:src="'../../../static/images/shop_product/'+item.img" alt=""></a>
                                     </div>
-                                    <div class="item-other-info" style="margin-top:30px;">
-                                        <i class="el-icon-goods fa-2x" style="color:#f40"></i>
-                                        <i class="el-icon-view fa-2x" style="color:#f40"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="td td-info">
-                                <div class="item-props">
-                                    <div>颜色分类：【3双装-纯色款】酒红+玫红+姜黄</div>
-                                    <div>尺码：均码（34-40）收藏宝贝加购物车享受快速发货</div>
-                                </div>
-                            </div>
-                            <div class="td td-price">
-                                <div class="item-price">
-                                    <div class="old-price"><strong>￥49.90</strong></div>
-                                    <div class="new-price"><strong>￥18.90</strong></div>
-                                </div>
-                            </div>
-                            <div class="td td-amount">
-                                <div class="item-amount">
-                                    <div>
-                                        <el-button-group>
-                                        <el-button style="pdidng:7px 6px;width:20px;display:inline-block;float:left" size="mini">-</el-button>
-                                        <div style="width:38px;display:inline-block;padding:0;float:left"><el-input v-model="input" size="mini">1</el-input></div>
-                                        <el-button style="pdidng:7px 6px;width:20px;display:inline-block;float:left" size="mini">+</el-button>
-                                        </el-button-group>
+                                    <div class="item-info">
+                                        <div class="item-basic-info">
+                                            {{item.info}}
+                                        </div>
+                                        <div class="item-other-info" style="margin-top:30px;">
+                                            <i class="el-icon-goods fa-2x" style="color:#f40"></i>
+                                            <i class="el-icon-view fa-2x" style="color:#f40"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="td td-sum">
-                                <div class="item-sum">
-                                    <strong>￥18.90</strong>
-                                </div>
-                            </div>
-                            <div class="td td-op">
-                                <div class="item-op">
-                                    <a href="">移入收藏夹</a>
-                                    <a href="">删除</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" list clear">
-                            <div class="td td-chk"><el-checkbox v-model="checked"></el-checkbox></div>
-                            <div class="td td-item">
-                                <div class="item-pic">
-                                    <a href=""><img src="../../../static/images/shop_product/product_1.jpg" alt=""></a>
-                                </div>
-                                <div class="item-info">
-                                    <div class="item-basic-info">
-                                        袜子女中筒纯棉堆堆袜韩版学院风日系黑色长袜女秋冬百搭韩国潮款
+                                <div class="td td-info">
+                                    <div class="item-props">
+                                        <div>颜色分类：{{item.props.color}}</div>
+                                        <div>尺码：{{item.props.size}}</div>
                                     </div>
-                                    <div class="item-other-info" style="margin-top:30px;">
-                                        <i class="el-icon-goods fa-2x" style="color:#f40"></i>
-                                        <i class="el-icon-view fa-2x" style="color:#f40"></i>
+                                </div>
+                                <div class="td td-price">
+                                    <div class="item-price">
+                                        <div class="old-price"><strong>{{item.price.old}}</strong></div>
+                                        <div class="new-price"><strong>{{item.price.new}}</strong></div>
+                                    </div>
+                                </div>
+                                <div class="td td-amount">
+                                    <div class="item-amount">
+                                        <div>
+                                            <el-input-number size="mini" v-model="inputNum[index]" :min="1" :max="10" label="描述文字"></el-input-number>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="td td-sum">
+                                    <div class="item-sum">
+                                        <strong>{{item.price.new}}</strong>
+                                    </div>
+                                </div>
+                                <div class="td td-op">
+                                    <div class="item-op">
+                                        <a href="">移入收藏夹</a>
+                                        <a href="">删除</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="td td-info">
-                                <div class="item-props">
-                                    <div>颜色分类：【3双装-纯色款】酒红+玫红+姜黄</div>
-                                    <div>尺码：均码（34-40）收藏宝贝加购物车享受快速发货</div>
-                                </div>
-                            </div>
-                            <div class="td td-price">
-                                <div class="item-price">
-                                    <div class="old-price"><strong>￥49.90</strong></div>
-                                    <div class="new-price"><strong>￥18.90</strong></div>
-                                </div>
-                            </div>
-                            <div class="td td-amount">
-                                <div class="item-amount">
-                                    <div>
-                                        <el-button-group>
-                                        <el-button style="pdidng:7px 6px;width:20px;display:inline-block;float:left" size="mini">-</el-button>
-                                        <div style="width:38px;display:inline-block;padding:0;float:left"><el-input v-model="input" size="mini">1</el-input></div>
-                                        <el-button style="pdidng:7px 6px;width:20px;display:inline-block;float:left" size="mini">+</el-button>
-                                        </el-button-group>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="td td-sum">
-                                <div class="item-sum">
-                                    <strong>￥18.90</strong>
-                                </div>
-                            </div>
-                            <div class="td td-op">
-                                <div class="item-op">
-                                    <a href="">移入收藏夹</a>
-                                    <a href="">删除</a>
-                                </div>
-                            </div>
-                        </div>
+                        </el-checkbox-group>
                     </div>
                 </div>
             </div>
-            <div class="bar-bottom">
+            <div class="bar-bottom" v-bind:class="{fixedBottom: isFixed }">
                 <div class="select-all">
                     <el-checkbox v-model="checked">全选</el-checkbox>
                 </div>
@@ -136,7 +88,7 @@
                     <el-button type="danger" icon="el-icon-delete" circle size="mini" style="margin-left:16px;"></el-button>
                 </div>
                 <div class="float-bar-right">
-                    <div>已选择商品<strong>0</strong>件</div>
+                    <div>已选择商品<strong>{{checkedNum}}</strong>件</div>
                     <div style="margin-left:24px;">合计(不含运费):<strong>0.00</strong>元</div>
                     <el-button style="margin-left:10px;" type="info" disabled="">结算</el-button>
                 </div>
@@ -146,7 +98,8 @@
 </template>
 <script>
 import Cookies from 'js-cookie';
-import AppHeader from "@/components/common/AppHeader"
+import AppHeader from "@/components/common/AppHeader";
+const city=[100,101,102,103,1011]
 export default {
     name:"cart",
     components:{
@@ -155,15 +108,31 @@ export default {
     data(){
         return{
             listDate:[],
+            checkAll:[],
+            isIndeterminate: true,
             checked:false,
-            input:8
+            inputNum:[],
+            isFixed:true,
+            cartWrapH:0,
+            listAllNum:0,
+            checkedNum:0,
+            checkedList:[]
         }
     },
     computed:{
        
     },
+    created(){
+        
+    },
+    beforeMount(){
+        this.getList();
+    },
     mounted(){
-        this.getList()
+        this.fixedBar();
+    },
+    ready(){
+        
     },
     methods:{
         getList(){
@@ -177,10 +146,119 @@ export default {
                 }
             }).then((res)=>{
                 Vue.listDate=res.data.data.data;
+                for(var i=0;i<Vue.listDate.length;i++){
+                    Vue.listAllNum+=Vue.listDate[i]["product"].length;
+                    // 初始化默认选中状态,此时为空
+                    let checkArr = []
+                    this.checkedList.push(checkArr);
+                    //；用Vue.set，支持响应式
+                    Vue.$set(this.checkAll,i,false)
+                    //this.checkAll.push(false)
+                }
+                
+                Vue.$nextTick(function () {
+                     // => '更新完成'
+                    let cartWrap=Vue.$refs.cartWrap;
+                    this.cartWrapH=cartWrap.offsetHeight;
+                })
                 //console.log(res.data.data.data)
             }).catch((error)=>{
-                //console.log(error)
+                console.log(error)
             })
+        },
+        fixedBar(){
+            var Vue=this;
+            let screenH=document.body.clientHeight||document.documentElement.clientheight;
+            window.addEventListener("scroll", function(e){
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+                let cartWrapH =Vue.cartWrapH;
+                //console.log(scrollTop+screenH,cartWrapH)
+                if(cartWrapH>scrollTop+screenH){
+                    Vue.isFixed=true;
+                }else{
+                    Vue.isFixed=false;
+                }
+                //console.log(cartWrap)
+                
+            })
+        },
+        handleCheckedList(listed,index){
+           // this.checkAll:[false],false,false]
+           //this.checkedList:[[100,102],[111,112]]
+            if(listed.length==this.listDate[index]['product'].length){
+                this.$set(this.checkAll,index,true)
+                //this.checkAll[index]=true;
+            }else{
+                 this.$set(this.checkAll,index,false)
+                 //this.checkAll[index]=false;
+            }
+            var count=0;
+            for(var n=0;n<this.checkAll.length;n++){  
+                if(this.checkAll[n]){
+                    count++;
+                }         
+            }
+            if(count==this.checkAll.length){
+                this.checked=true;
+            }else{
+                this.checked=false;
+            }
+            console.log(count,this.checkAll,"pppp")
+            this.countSum()
+        },
+        handleCheckShop(value,index){
+            let idArr=[];
+            for(var i=0;i<this.listDate[index]["product"].length;i++){
+                idArr.push(this.listDate[index]["product"][i]["id"])
+            };
+            //console.log(idArr)
+            if(value){
+                this.$set(this.checkedList,index,idArr);
+
+            }else{
+                this.$set(this.checkedList,index,[])
+            }
+            var count=0;
+            for(var n=0;n<this.checkAll.length;n++){  
+                if(this.checkAll[n]){
+                    count++;
+                }         
+            }
+            if(count==this.checkAll.length){
+                this.checked=true;
+            }else{
+                this.checked=false;
+            }
+            this.countSum()
+        },
+        handleCheckedAll(value){
+            if(value){
+                for(var j=0;j<this.listDate.length;j++){
+                    this.$set(this.checkAll,j,true);//店铺的选择
+                    var idArr=[];
+                    for(var i=0;i<this.listDate[j]["product"].length;i++){
+                        idArr.push(this.listDate[j]["product"][i]["id"])
+                    };
+                    this.$set(this.checkedList,j,idArr)//设置每个商品的；
+                }
+                
+            }else{
+                for(var j=0;j<this.listDate.length;j++){
+                    this.$set(this.checkAll,j,false);//店铺的选择        
+                    this.$set(this.checkedList,j,[])
+                }
+            }
+            this.countSum()
+        },
+        countSum(){
+            var num=0;
+            for(var i=0;i<this.checkedList.length;i++){
+                num+=this.checkedList[i].length;
+                
+            }
+            
+            this.checkedNum=num;
+            console.log(this.checkedNum,"kkk")
         }
     }
     
@@ -329,6 +407,7 @@ export default {
     }
     .bar-bottom{
         height: 40px;
+        width: 980px;
         line-height: 40px;
         background: #e5e5e5;
         font-size: 12px;
@@ -345,6 +424,11 @@ export default {
             div{
                 float: left;
             }
+        }
+        &.fixedBottom{
+            position: fixed;
+            bottom: 0px;
+            z-index:9999;
         }
     }
 }
