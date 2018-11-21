@@ -4,7 +4,7 @@
         <div class="cart-wrap clear" ref="cartWrap">
             <div class="top-bar clear">
                 <div class="left-f cart-filter-bar"><strong>全部商品</strong><span style="margin-left:8px;color:#f40;">{{listAllNum}}</span></div> 
-                <div class="right-f">已选商品（不喊运费）<span style="color:#f40;margin-right:6px">0.00</span><el-button type="info" size="mini" disabled="">结算</el-button></div>
+                <div class="right-f">已选商品（不喊运费）<span ref="" style="color:#f40;margin-right:6px">{{sumCount}}</span><el-button type="info" size="mini" v-bind:disabled="!isActive" v-bind:class="{ active: isActive }">结算</el-button></div>
             </div>
             <div class="bar-wrap">
                 <div class="th th-chk"><el-checkbox v-model="checked" @change="handleCheckedAll">全选</el-checkbox></div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="product-list" >
                         <el-checkbox-group v-model="checkedList[index]" @change="handleCheckedList(checkedList[index],index)">
-                            <div class="list clear" v-for="(item ,index) in shop.product" :key="index">
+                            <div class="list clear" v-for="(item ,ind) in shop.product" :key="ind" @click="initP(item.price)">
                                 <div class="td td-chk">
                                     <!-- <el-checkbox v-model="checked"></el-checkbox> -->
                                     
@@ -60,7 +60,7 @@
                                 <div class="td td-amount">
                                     <div class="item-amount">
                                         <div>
-                                            <el-input-number size="mini" v-model="inputNum[index]" :min="1" :max="10" label="描述文字"></el-input-number>
+                                            <el-input-number size="mini" v-model="inputNum[index][ind]" :min="1" :max="10" label="描述文字" @change="handleChangeNum(inputNum[index][ind],index,ind)"></el-input-number>
                                         </div>
                                     </div>
                                 </div>
@@ -89,8 +89,8 @@
                 </div>
                 <div class="float-bar-right">
                     <div>已选择商品<strong>{{checkedNum}}</strong>件</div>
-                    <div style="margin-left:24px;">合计(不含运费):<strong>0.00</strong>元</div>
-                    <el-button style="margin-left:10px;" type="info" disabled="">结算</el-button>
+                    <div style="margin-left:24px;">合计(不含运费):<strong>{{sumCount}}</strong>元</div>
+                    <el-button ref="countBtn" style="margin-left:10px;" type="info" v-bind:disabled="!isActive" v-bind:class="{ active: isActive }">结算</el-button>
                 </div>
             </div>
         </div>
@@ -116,7 +116,9 @@ export default {
             cartWrapH:0,
             listAllNum:0,
             checkedNum:0,
-            checkedList:[]
+            checkedList:[],
+            sumCount:0,
+            isActive:false
         }
     },
     computed:{
@@ -154,6 +156,11 @@ export default {
                     //；用Vue.set，支持响应式
                     Vue.$set(this.checkAll,i,false)
                     //this.checkAll.push(false)
+                    //this.inputNum[i]=[];
+                    Vue.$set(this.inputNum,i,[]);
+                    for(var j=0;j<Vue.listDate[i]["product"].length;j++){
+                        Vue.$set(this.inputNum[i],j,1);
+                    }
                 }
                 
                 Vue.$nextTick(function () {
@@ -248,17 +255,49 @@ export default {
                     this.$set(this.checkedList,j,[])
                 }
             }
-            this.countSum()
+            this.countSum();
+            this.findIdPrice(100,this.listDate)
+        },
+        handleChangeNum(value,index,ind){
+           this.$set(this.inputNum[index],ind,value);//修改数量；
+           this.countSum();
         },
         countSum(){
-            var num=0;
+            var num=0,priceCount=0;
             for(var i=0;i<this.checkedList.length;i++){
+                for(var j=0;j<this.checkedList[i].length;j++){
+                    var id=this.checkedList[i][j];
+                    var resObj=this.findIdPrice(id,this.listDate),
+                    price=resObj['price'],index=resObj['index'].split("-"),
+                    count=this.inputNum[index[0]][index[1]];
+                    priceCount+=price*count;
+                }
                 num+=this.checkedList[i].length;
                 
             }
-            
             this.checkedNum=num;
-            console.log(this.checkedNum,"kkk")
+            this.isActive= num>0 ? true :false;
+            var btn=this.$refs.countBtn;
+            console.log(btn,"btn")
+            this.sumCount=priceCount.toFixed(2);
+
+            console.log(price,count,"kkk")
+        },
+        findIdPrice(id,listDate){
+            var obj={};
+            for(var i=0;i<listDate.length;i++){
+                var productList=listDate[i]['product'];
+                for(var j=0;j<productList.length;j++){
+                    if(id==productList[j]['id']){
+                        obj['price']=productList[j]['price']['new'].substring(1);
+                        obj['index']=i+'-'+j;
+                    }
+                }
+            }
+            return obj;
+        },
+        initP(p){
+            console.log(p,"pppp")
         }
     }
     
@@ -432,7 +471,9 @@ export default {
         }
     }
 }
-
+.active{
+    background:#f40;
+}
 </style>
 
 

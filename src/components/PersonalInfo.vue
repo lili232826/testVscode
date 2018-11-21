@@ -6,7 +6,7 @@
           <div class="user-info">
             <el-upload
               class="avatar-uploader"
-              action="/api/headerPic"
+              action="https://jsonplaceholder.typicode.com/posts/"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
@@ -101,10 +101,11 @@
 
 <script>
 var echarts = require('echarts');
+import {mapState} from "vuex";
 export default {
   data() {
       return {
-         imageUrl: '',
+        imageUrl: '',
         labelPosition: 'right',
         editable:false,//编辑form默认为false
         formUser: {
@@ -115,6 +116,9 @@ export default {
           email:"jiubugaosuni@qisini.com"
         }
       };
+    },
+    computed:{
+      ...mapState(["saveAdminHeader"])
     },
     mounted(){
       // 基于准备好的dom，初始化echarts实例
@@ -162,7 +166,7 @@ export default {
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
-
+        console.log(file,'file')
         if (!isJPG) {
           this.$message.error('上传头像图片只能是 JPG 格式!');
         }

@@ -12,7 +12,7 @@ const store = new Vuex.Store({
         options: [],
         activeIndex: '/index/pic',
         userInfo: {
-
+            avatar: "admin.jpg"
         },
         userInfo2: {
             'name': 'admin2'
@@ -65,6 +65,9 @@ const store = new Vuex.Store({
         },
         setToken(state, n) {
             state.token = n;
+        },
+        saveAdminHeader(state, userInfo) {
+            state.userInfo = userInfo;
         }
     },
     getters: {
