@@ -19,7 +19,8 @@
         "vue": "^2.5.2",
         "vue-lazyload": "^1.2.6",
         "vue-router": "^3.0.1",
-        "vue-waves": "^0.1.1"
+        "vue-waves": "^0.1.1",
+        "webpack-cli": "^3.2.1"
     },
     "devDependencies": {
         "autoprefixer": "^7.1.2",
@@ -59,7 +60,7 @@
         "vuex": "^3.0.1",
         "webpack": "^3.6.0",
         "webpack-bundle-analyzer": "^2.9.0",
-        "webpack-dev-server": "^3.1.14",
+        "webpack-dev-server": "^2.9.1",
         "webpack-merge": "^4.1.0"
     },
     "engines": {
