@@ -15,7 +15,7 @@ export default {
         return {
             menus:[
                 { route: '/', name: '首页',icon:"fa-home"},
-                { route: '/user', name: '用户管理',icon:"fa-user-o"},
+                { route: '/user', name: '用户管理',icon:"fa-user-o"},              
                 { route: '/psd', name: '密码管理',icon:"fa-lock"},
                 { route: '/salary', name: '工资管理',icon:"fa-credit-card"},
                 { route: '/attendence', name: '考勤管理' ,icon:"fa-calendar-check-o"},

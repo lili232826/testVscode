@@ -11,7 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import VueWaves from 'vue-waves/dist/vue-waves.js'
 Vue.config.productionTip = false; //阻止 vue 在启动时生成生产提示
 
-Vue.prototype.$http = axios;
+//Vue.prototype.$http = axios;
 Vue.use(VueWaves); //水波纹按钮
 Vue.use(ElementUI);
 

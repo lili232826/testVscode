@@ -82,7 +82,7 @@ export default {
         }
       }
       if (!flag) {
-        console.log(to.path.split('/'),"to")
+        //console.log(to.path.split('/'),"to")
         this.$store.commit('add_tabs', {route: '/' + to.path.slice(1), name: to.name});
         this.$store.commit('set_active_index', '/' + to.path.slice(1));
       }

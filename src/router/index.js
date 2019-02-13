@@ -15,6 +15,8 @@ import PersonalInfo from '@/components/PersonalInfo'
 import Suggest from "@/components/Suggest"
 //购物车
 import Cart from "@/views/Cart/Cart"
+//客户详情
+import ClientInfo from "@/components/ClientInfo"
 
 import Template from '@/components/template'
 
@@ -55,10 +57,12 @@ export default new Router({
             ]
         },
         {
-            path: '/userInfo/:id',
-            name: '用户详情页',
+            path: '/user2/:id',
+            name: '用户管理2',
             component: Layout,
-            component: Template
+            children: [
+                { path: '', component: ClientInfo, name: '用户管理22' }
+            ]
         },
         {
             path: '/psd',

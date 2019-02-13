@@ -97,6 +97,7 @@
     <el-button @click="toggleSelection([tableData[1], tableData[2]])">选中第二行和第三行</el-button>
     <el-button @click="toggleSelection()">取消选择</el-button>
   </div>
+  <router-link :to="{ name: '用户管理22', params: { id: 333},query:{name:'lili'}}"><span class="notice_title">跳转路由传参</span></router-link>
 </div>
 </template>
 
@@ -120,6 +121,13 @@ import tableList from "@/data/tableList";
     },
     created: function () {
       //this.pageDate=this.tableData.splice(0,this.size);
+    },
+    watch: {
+      $route (to, from) {
+        // 对路由变化作出响应...
+        console.log('watch')
+        console.log(to,from,'router')
+      }
     },
     methods: {
       getList(){
@@ -155,7 +163,7 @@ import tableList from "@/data/tableList";
         return row[property] === value;
       },
       formatDress(row, column) {
-        console.log(row,"row")
+        //console.log(row,"row")
         return row.address + "hhhhhh";
       },
       handleSizeChange(val){//切换每页的条数
@@ -169,7 +177,7 @@ import tableList from "@/data/tableList";
         this.getList()
       },
       handleInfo(index,row){
-
+        this.$router.push('/user2/'+index)
       },
       handleEdit(index, row) {
         //console.log(index, row);
